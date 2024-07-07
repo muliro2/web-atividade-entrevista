@@ -9,6 +9,7 @@
         var urlRetorno = '@Url.Action("Index", "Cliente", new { area = "" })';
 </script>
     @Scripts.Render("~/bundles/altClientes")
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 }
 <h2>@Html.Raw(ViewBag.Title)</h2>
 @Html.Partial("Forms")
