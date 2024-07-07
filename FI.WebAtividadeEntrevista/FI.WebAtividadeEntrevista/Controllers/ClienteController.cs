@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FI.AtividadeEntrevista.DML;
+using System.Text.RegularExpressions;
+using FI.WebAtividadeEntrevista.Common;
 
 namespace WebAtividadeEntrevista.Controllers
 {
@@ -26,12 +28,17 @@ namespace WebAtividadeEntrevista.Controllers
         public JsonResult Incluir(ClienteModel model)
         {
             BoCliente bo = new BoCliente();
+            List<string> errors = new List<string>();
             
             model.CPF = Regex.Replace(model.CPF,@"[^\d]", "");
             
-            if (!this.ModelState.IsValid)
+            if (Validator.VerifyExistence(model))
             {
-                List<string> erros = (from item in ModelState.Values
+                errors.Add("O CPF informado já está cadastrado.");
+            }
+            else if (!this.ModelState.IsValid)
+            {
+                errors = (from item in ModelState.Values
                                       from error in item.Errors
                                       select error.ErrorMessage).ToList();
 
@@ -58,6 +65,9 @@ namespace WebAtividadeEntrevista.Controllers
            
                 return Json("Cadastro efetuado com sucesso");
             }
+
+            Response.StatusCode = 400;
+            return Json(string.Join(Environment.NewLine, errors));
         }
 
         [HttpPost]

@@ -2,34 +2,42 @@
 $(document).ready(function () {
     $('#formCadastro').submit(function (e) {
         e.preventDefault();
-        $.ajax({
-            url: urlPost,
-            method: "POST",
-            data: {
-                "NOME": $(this).find("#Nome").val(),
-                "CEP": $(this).find("#CEP").val(),
-                "Email": $(this).find("#Email").val(),
-                "Sobrenome": $(this).find("#Sobrenome").val(),
-                "Nacionalidade": $(this).find("#Nacionalidade").val(),
-                "Estado": $(this).find("#Estado").val(),
-                "Cidade": $(this).find("#Cidade").val(),
-                "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").val(),
-                "CPF": $(this).find("#CPF").val()
-            },
-            error:
-            function (r) {
-                if (r.status == 400)
-                    ModalDialog("Ocorreu um erro", r.responseJSON);
-                else if (r.status == 500)
-                    ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
-            },
-            success:
-            function (r) {
-                ModalDialog("Sucesso!", r)
-                $("#formCadastro")[0].reset();
-            }
-        });
+
+        const cpf = $(this).find("#CPF").val();
+
+        if (!isValidCPF(cpf)) {
+            ModalDialog("CPF inválido", "O campo CPF informado é inválido, informe um CPF válido.");
+        } else {
+            $.ajax({
+                url: urlPost,
+                method: "POST",
+                data: {
+                    "NOME": $(this).find("#Nome").val(),
+                    "CEP": $(this).find("#CEP").val(),
+                    "Email": $(this).find("#Email").val(),
+                    "Sobrenome": $(this).find("#Sobrenome").val(),
+                    "Nacionalidade": $(this).find("#Nacionalidade").val(),
+                    "Estado": $(this).find("#Estado").val(),
+                    "Cidade": $(this).find("#Cidade").val(),
+                    "Logradouro": $(this).find("#Logradouro").val(),
+                    "Telefone": $(this).find("#Telefone").val(),
+                    "CPF": $(this).find("#CPF").val()
+                },
+                error:
+                    function (r) {
+                        if (r.status == 400)
+                            ModalDialog("Ocorreu um erro", r.responseJSON);
+                        else if (r.status == 500)
+                            ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
+                    },
+                success:
+                    function (r) {
+                        ModalDialog("Sucesso!", r)
+                        $("#formCadastro")[0].reset();
+                    }
+            });
+        }
+        
     })
 
     $('#CPF').mask('000.000.000-00');
@@ -57,4 +65,27 @@ function ModalDialog(titulo, texto) {
 
     $('body').append(texto);
     $('#' + random).modal('show');
+}
+
+function isValidCPF(strCPF) {
+    var Soma;
+    var Resto;
+    Soma = 0;
+    strCPF = strCPF.replace(/\D/g, '');
+
+    if (strCPF == "00000000000") return false;
+
+    for (i = 1; i <= 9; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11)) Resto = 0;
+    if (Resto != parseInt(strCPF.substring(9, 10))) return false;
+
+    Soma = 0;
+    for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11)) Resto = 0;
+    if (Resto != parseInt(strCPF.substring(10, 11))) return false;
+    return true;
 }
