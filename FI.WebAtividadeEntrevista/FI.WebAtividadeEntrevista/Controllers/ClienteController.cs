@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using FI.AtividadeEntrevista.DML;
 using System.Text.RegularExpressions;
 using FI.WebAtividadeEntrevista.Common;
+using FI.WebAtividadeEntrevista.Models;
 
 namespace WebAtividadeEntrevista.Controllers
 {
@@ -28,6 +29,7 @@ namespace WebAtividadeEntrevista.Controllers
         {
             BoCliente bo = new BoCliente();
             List<string> errors = new List<string>();
+            BoBeneficiario boBeneficiario = new BoBeneficiario();
 
             model.CPF = Regex.Replace(model.CPF,@"[^\d]", "");
 
@@ -58,7 +60,19 @@ namespace WebAtividadeEntrevista.Controllers
                     CPF = model.CPF
                 });
 
-           
+                if (model.Beneficiarios != null)
+                {
+                    foreach (BeneficiarioModel beneficiario in model.Beneficiarios)
+                    {
+                        boBeneficiario.Incluir(new Beneficiario()
+                        {
+                            CPF = beneficiario.CPF,
+                            Nome = beneficiario.Nome,
+                            IdCliente = model.Id
+                        });
+                    }
+                }
+
                 return Json("Cadastro efetuado com sucesso");
             }
 
@@ -70,9 +84,10 @@ namespace WebAtividadeEntrevista.Controllers
         public JsonResult Alterar(ClienteModel model)
         {
             BoCliente bo = new BoCliente();
+            BoBeneficiario boBeneficiario = new BoBeneficiario();
 
             model.CPF = Regex.Replace(model.CPF, @"[^\d]", "");
-
+            
             if (!this.ModelState.IsValid)
             {
                 List<string> erros = (from item in ModelState.Values
@@ -98,7 +113,36 @@ namespace WebAtividadeEntrevista.Controllers
                     Telefone = model.Telefone,
                     CPF = model.CPF
                 });
-                               
+
+                if (model.Beneficiarios != null)
+                {
+                    foreach (BeneficiarioModel beneficiario in model.Beneficiarios)
+                    {
+                        beneficiario.CPF = Regex.Replace(beneficiario.CPF, @"[^\d]", "");
+                        if (beneficiario.Id == 0)
+                        {
+                            boBeneficiario.Incluir(new Beneficiario()
+                            {
+                                CPF = beneficiario.CPF,
+                                Nome = beneficiario.Nome,
+                                IdCliente = model.Id
+                            });
+                        }
+                        else if (beneficiario.Id != null && beneficiario.Action == 0)
+                        {
+                            boBeneficiario.Alterar(new Beneficiario()
+                            {
+                                Id = beneficiario.Id,
+                                CPF = beneficiario.CPF,
+                                Nome = beneficiario.Nome,
+                                IdCliente = model.Id
+                            });
+                        }
+                        else if (beneficiario.Id != null && beneficiario.Action == 1)
+                            boBeneficiario.Excluir(beneficiario.Id);
+                    }
+                }
+
                 return Json("Cadastro alterado com sucesso");
             }
         }
@@ -106,9 +150,28 @@ namespace WebAtividadeEntrevista.Controllers
         [HttpGet]
         public ActionResult Alterar(long id)
         {
-            BoCliente bo = new BoCliente();
-            Cliente cliente = bo.Consultar(id);
+            BoCliente boCliente = new BoCliente();
+            BoBeneficiario boBeneficiario = new BoBeneficiario();
+            Cliente cliente = boCliente.Consultar(id);
+            cliente.Beneficiarios = boBeneficiario.Consultar(id);
+            
             Models.ClienteModel model = null;
+
+            List<BeneficiarioModel> beneficiarioList = new List<BeneficiarioModel>();
+
+            if (cliente.Beneficiarios.Count > 0)
+            {
+                foreach (Beneficiario beneficiarioItem in cliente.Beneficiarios)
+                {
+                    beneficiarioList.Add(new BeneficiarioModel
+                    {
+                        Id = beneficiarioItem.Id,
+                        ClienteId = beneficiarioItem.IdCliente,
+                        CPF = beneficiarioItem.CPF,
+                        Nome = beneficiarioItem.Nome
+                    });
+                }
+            }
 
             if (cliente != null)
             {
@@ -124,7 +187,8 @@ namespace WebAtividadeEntrevista.Controllers
                     Nome = cliente.Nome,
                     Sobrenome = cliente.Sobrenome,
                     Telefone = cliente.Telefone,
-                    CPF = cliente.CPF
+                    CPF = cliente.CPF,
+                    Beneficiarios = beneficiarioList
                 };
 
             
