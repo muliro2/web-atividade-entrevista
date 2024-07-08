@@ -1,5 +1,3 @@
-C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\obj\Debug\FI.WebAtividadeEntrevista.csproj.AssemblyReference.cache
-C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\obj\Debug\FI.WebAtividadeEntrevista.csproj.CoreCompileInputs.cache
 C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\bin\FI.WebAtividadeEntrevista.dll.config
 C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\bin\FI.WebAtividadeEntrevista.dll
 C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\bin\FI.WebAtividadeEntrevista.pdb
@@ -76,6 +74,8 @@ C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\
 C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\bin\Newtonsoft.Json.xml
 C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\bin\Antlr3.Runtime.pdb
 C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\obj\Debug\FI.WebAtividadeEntrevista.csproj.AssemblyReference.cache
+C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\obj\Debug\FI.WebAtividadeEntrevista.csproj.CoreCompileInputs.cache
 C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\obj\Debug\FI.WebAt.CEBAAAF9.Up2Date
 C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\obj\Debug\FI.WebAtividadeEntrevista.dll
 C:\Users\Sergio\Source\Repos\web-atividade-entrevista\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista\obj\Debug\FI.WebAtividadeEntrevista.pdb
