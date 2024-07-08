@@ -128,7 +128,7 @@ namespace WebAtividadeEntrevista.Controllers
                                 IdCliente = model.Id
                             });
                         }
-                        else if (beneficiario.Id != null && beneficiario.Action == 0)
+                        else if (beneficiario.Id != 0 && beneficiario.Action == 0)
                         {
                             boBeneficiario.Alterar(new Beneficiario()
                             {
